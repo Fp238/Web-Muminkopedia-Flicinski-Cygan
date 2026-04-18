@@ -19,3 +19,14 @@
 * **Łączenie:** Używamy `ObjectId`. To unikalny kod, który łączy przedmiot z konkretną postacią.
 * **Usuwanie:** Jeśli postać zostanie usunięta, jej przedmioty zostają w bazie, ale mają pustego właściciela (`null`).
 * **Spójność:** Każdy wpis musi mieć imię/nazwę. Bez tego baza odrzuci dane.
+
+
+### Endpointy
+| Metoda | Ścieżka | Opis                             |
+| :--- | :--- |:---------------------------------|
+| **POST** | `/api/characters` | Dodanie nowej postaci.           |
+| **GET** | `/api/characters` | Lista wszystkich postaci.        |
+| **GET** | `/api/characters/:id` | Szczegóły konkretnej postaci.    |
+| **DELETE** | `/api/characters/:id` | Usunięcie postaci z ewidencji.   |
+| **POST** | `/api/artifacts` | Dodanie artefaktu                |
+| **GET** | `/api/artifacts/owner/:charId` | Lista przedmiotów danej postaci. |
