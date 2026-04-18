@@ -1,18 +1,21 @@
 ### Character
-| Pole         | Typ | Wymagane | Opis |
-|:-------------| :--- | :--- | :--- |
-| `id`         | String/UUID | Tak | Unikalny identyfikator postaci. |
-| `imie`       | String | Tak | Imię postaci (np. Muminek). |
-| `opis`       | Text | Tak | Krótka charakterystyka postaci. |
-| `gatunek`    | String | Tak | Gatunek (np. Muminek, Miukk, Paszczak, Ryjek). |
-| `status_snu` | Boolean | Tak | Czy postać aktualnie śpi snem zimowym? (true/false).|
-
-### Artifact
-
 | Pole | Typ | Wymagane | Opis |
 | :--- | :--- | :--- | :--- |
-| `id` | String/UUID | Tak | Unikalny identyfikator artefaktu. |
-| `nazwa` | String | Tak | Nazwa przedmiotu. |
-| `opis_wlasciwosci` | Text | Tak | Co robi dany przedmiot (np. „zmienia rzeczy w chmury”). |
-| `wlasciciel_id` | String (FK) | Tak | Powiązanie z ID postaci z Rejestru Postaci. |
+| `imie` | String | Tak | Imię postaci (np. Muminek). |
+| `opis` | String | Tak | Krótka charakterystyka postaci. |
+| `gatunek` | String | Tak | Gatunek (np. Muminek, Miukk, Paszczak). |
+| `status_snu` | Boolean | Tak | Czy postać aktualnie śpi snem zimowym? |
+| `przyjaciel_id` | ObjectId | Nie | Powiązanie z ID innej postaci. |
 
+### Artifact
+| Pole | Typ | Wymagane | Opis |
+| :--- | :--- | :--- | :--- |
+| `nazwa` | String | Tak | Nazwa przedmiotu. |
+| `opis_wlasciwosci` | String | Tak | Co robi dany przedmiot. |
+| `wlasciciel_id` | ObjectId | Tak | Powiązanie z ID postaci (właściciela). |
+
+### Logika Relacji
+
+* **Łączenie:** Używamy `ObjectId`. To unikalny kod, który łączy przedmiot z konkretną postacią.
+* **Usuwanie:** Jeśli postać zostanie usunięta, jej przedmioty zostają w bazie, ale mają pustego właściciela (`null`).
+* **Spójność:** Każdy wpis musi mieć imię/nazwę. Bez tego baza odrzuci dane.
