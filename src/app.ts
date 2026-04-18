@@ -1,3 +1,5 @@
+import characterRoutes from './routes/characterRoutes';
+import artifactRoutes from './routes/artifactRoutes';
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -21,6 +23,9 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.get("/", (req, res) => {
     res.json({ message: "API Express + TypeScript działa!" });
 });
+
+app.use('/api/characters', characterRoutes);
+app.use('/api/artifacts', artifactRoutes);
 
 app.listen(3001, () => {
     console.log('Serwer działa na porcie 3001');
