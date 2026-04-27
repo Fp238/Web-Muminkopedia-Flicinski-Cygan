@@ -1,34 +1,49 @@
-import characterRoutes from './routes/characterRoutes';
-import artifactRoutes from './routes/artifactRoutes';
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+
+import characterRoutes from "./routes/characterRoutes";
+import artifactRoutes from "./routes/artifactRoutes";
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URI as string)
-    .then(() => console.log('Połączono z MongoDB'))
-    .catch((err) => console.error('Błąd połączenia:', err));
-
 const app = express();
 
+// Middleware
 app.use(cors());
-app.use(express.json()); // Parsowanie JSON w requestach
+app.use(express.json());
 
+// Static files (jeśli potrzebne)
 app.use(express.static(path.join(__dirname, "../public")));
 
+// Test route
 app.get("/", (req, res) => {
     res.json({ message: "API Express + TypeScript działa!" });
 });
 
-app.use('/api/characters', characterRoutes);
-app.use('/api/artifacts', artifactRoutes);
+// Routes
+app.use("/api/characters", characterRoutes);
+app.use("/api/artifacts", artifactRoutes);
 
-app.listen(3001, () => {
-    console.log('Serwer działa na porcie 3001');
-});
+// MongoDB connection + start server
+const PORT = process.env.PORT || 3001;
+
+async function startServer() {
+    try {
+        await mongoose.connect(process.env.MONGO_URI as string);
+
+        console.log("Połączono z MongoDB");
+
+        app.listen(PORT, () => {
+            console.log(`Serwer działa na porcie ${PORT}`);
+        });
+    } catch (err) {
+        console.error("Błąd połączenia:", err);
+    }
+}
+
+startServer();
 
 export default app;
