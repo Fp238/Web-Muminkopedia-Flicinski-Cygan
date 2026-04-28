@@ -1,4 +1,5 @@
 import { Artifact, IArtifact } from "../models/Artifact";
+import { Types } from "mongoose";
 
 
 export class ArtifactRepository {
@@ -11,11 +12,21 @@ export class ArtifactRepository {
     }
 
     async create(data: Partial<IArtifact>): Promise<IArtifact> {
-        return Artifact.create(data);
+        return Artifact.create({
+            ...data,
+            owner: new Types.ObjectId(data.owner),
+        });
     }
 
     async update(id: string, data: Partial<IArtifact>): Promise<IArtifact | null> {
-        return Artifact.findByIdAndUpdate(id, data, { new: true });
+        return Artifact.findByIdAndUpdate(
+            id,
+            {
+                ...data,
+                ...(data.owner && { owner: new Types.ObjectId(data.owner) }),
+            },
+            { new: true }
+        ).populate("owner");
     }
 
     async delete(id: string): Promise<IArtifact | null> {
@@ -23,7 +34,7 @@ export class ArtifactRepository {
     }
 
     async findByOwner(ownerId: string): Promise<IArtifact[]> {
-        return Artifact.find({ owner: ownerId });
+        return Artifact.find({ owner: ownerId }).populate("owner");
     }
 
     async deleteByOwner(ownerId: string): Promise<void> {
