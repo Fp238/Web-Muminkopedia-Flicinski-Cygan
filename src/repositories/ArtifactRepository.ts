@@ -1,43 +1,35 @@
 import { Artifact, IArtifact } from "../models/Artifact";
-import { Types } from "mongoose";
 
 
 export class ArtifactRepository {
     async findAll(): Promise<IArtifact[]> {
-        return Artifact.find().populate("owner");
+        return Artifact.find().populate("wlasciciel_id");
     }
 
     async findById(id: string): Promise<IArtifact | null> {
-        return Artifact.findById(id).populate("owner");
+        return Artifact.findById(id).populate("wlasciciel_id");
     }
 
     async create(data: Partial<IArtifact>): Promise<IArtifact> {
-        return Artifact.create({
-            ...data,
-            owner: new Types.ObjectId(data.owner),
-        });
+        return Artifact.create(data);
     }
 
-    async update(id: string, data: Partial<IArtifact>): Promise<IArtifact | null> {
-        return Artifact.findByIdAndUpdate(
-            id,
-            {
-                ...data,
-                ...(data.owner && { owner: new Types.ObjectId(data.owner) }),
-            },
-            { new: true }
-        ).populate("owner");
+    async update(id: string, data: Partial<IArtifact>) {
+        return Artifact.findByIdAndUpdate(id, data, { new: true });
     }
 
-    async delete(id: string): Promise<IArtifact | null> {
+    async delete(id: string) {
         return Artifact.findByIdAndDelete(id);
     }
 
-    async findByOwner(ownerId: string): Promise<IArtifact[]> {
-        return Artifact.find({ owner: ownerId }).populate("owner");
+    async findByOwner(ownerId: string) {
+        return Artifact.find({ wlasciciel_id: ownerId }).populate("wlasciciel_id");
     }
 
-    async deleteByOwner(ownerId: string): Promise<void> {
-        await Artifact.deleteMany({ owner: ownerId });
+    async clearOwner(ownerId: string) {
+        return Artifact.updateMany(
+            { wlasciciel_id: ownerId },
+            { wlasciciel_id: null }
+        );
     }
 }

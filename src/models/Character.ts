@@ -1,43 +1,39 @@
-import { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 
 export interface ICharacter extends Document {
-    name: string;
-    description: string;
-    species: "Muminek" | "Miukk" | "Paszczak" | "Inne";
-    isHibernating: boolean;
-    bestFriend?: string | null;
+    imie: string;
+    opis: string;
+    gatunek: string;
+    status_snu: boolean;
+    przyjaciel_id?: Types.ObjectId | null;
 }
 
-const CharacterSchema = new Schema<ICharacter>(
-    {
-        name: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        description: {
-            type: String,
-            required: true,
-        },
-        species: {
-            type: String,
-            required: true,
-            enum: ["Muminek", "Miukk", "Paszczak", "Inne"],
-        },
-        isHibernating: {
-            type: Boolean,
-            default: false,
-        },
-        bestFriend: {
-            type: Schema.Types.ObjectId,
-            ref: "Character",
-            default: null,
-        },
+const CharacterSchema = new Schema<ICharacter>({
+    imie: {
+        type: String,
+        required: true,
     },
-    {
-        timestamps: true,
-    }
-);
+    opis: {
+        type: String,
+        required: true,
+    },
+    gatunek: {
+        type: String,
+        required: true,
+    },
+    status_snu: {
+        type: Boolean,
+        required: true,
+    },
+    przyjaciel_id: {
+        type: Schema.Types.ObjectId,
+        ref: "Character",
+        default: null,
+    },
+});
 
-export const Character = model<ICharacter>("Character", CharacterSchema);
+export const Character = mongoose.model<ICharacter>(
+    "Character",
+    CharacterSchema
+);
