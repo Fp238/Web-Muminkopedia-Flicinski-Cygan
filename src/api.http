@@ -1,0 +1,88 @@
+@BASE_URL = http://localhost:3001
+
+
+### CHARACTER API
+
+### GET all characters
+GET {{BASE_URL}}/api/characters
+
+
+### GET character by id
+GET {{BASE_URL}}/api/characters/69f245fa86b73cf0d059bb80
+
+
+### CREATE character
+POST {{BASE_URL}}/api/characters
+Content-Type: application/json
+
+{
+  "imie": "Muminek",
+  "opis": "Ciekawski bohater doliny",
+  "gatunek": "Muminek",
+  "status_snu": false
+}
+
+
+### UPDATE character
+PUT {{BASE_URL}}/api/characters/69f245fa86b73cf0d059bb80
+Content-Type: application/json
+
+{
+  "imie": "Muminek",
+  "opis": "Zaktualizowany opis",
+  "gatunek": "Muminek",
+  "status_snu": false
+}
+
+
+### DELETE character
+DELETE {{BASE_URL}}/api/characters/69f245fa86b73cf0d059bb80
+
+
+### SET FRIEND
+PATCH {{BASE_URL}}/api/characters/69f245fa86b73cf0d059bb80/przyjaciel
+Content-Type: application/json
+
+{
+  "przyjaciel_id": "REPLACE_FRIEND_ID"
+}
+
+
+### ARTIFACT API
+
+### GET all artifacts
+GET {{BASE_URL}}/api/artifacts
+
+
+### GET artifact by id
+GET {{BASE_URL}}/api/artifacts/69f245fa86b73cf0d059bb8a
+
+
+### CREATE artifact
+POST {{BASE_URL}}/api/artifacts
+Content-Type: application/json
+
+{
+  "nazwa": "Kapelusz Czarnoksiężnika",
+  "opis_wlasciwosci": "Zmienia rzeczy w coś dziwnego",
+  "wlasciciel_id": "REPLACE_OWNER_ID"
+}
+
+
+### UPDATE artifact
+PUT {{BASE_URL}}/api/artifacts/69f245fa86b73cf0d059bb8a
+Content-Type: application/json
+
+{
+  "nazwa": "Zmieniona nazwa",
+  "opis_wlasciwosci": "Nowy opis",
+  "wlasciciel_id": "REPLACE_OWNER_ID"
+}
+
+
+### DELETE artifact
+DELETE {{BASE_URL}}/api/artifacts/69f245fa86b73cf0d059bb8a
+
+
+### GET artifacts by owner
+GET {{BASE_URL}}/api/artifacts/owner/69f245fa86b73cf0d059bb80
