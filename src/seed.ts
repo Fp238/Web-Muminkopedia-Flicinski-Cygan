@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { Character } from "./models/Character";
 import { Artifact } from "./models/Artifact";
 
+
 dotenv.config();
 
 async function seed() {
@@ -14,84 +15,91 @@ async function seed() {
     await Character.deleteMany({});
 
     const muminek = await Character.create({
-        name: "Muminek",
-        description: "Ciekawski i odważny mieszkaniec doliny",
-        species: "Muminek",
+        imie: "Muminek",
+        opis: "Ciekawski i odważny mieszkaniec doliny",
+        gatunek: "Muminek",
+        status_snu: false,
     });
 
     const mama = await Character.create({
-        name: "Mama Muminka",
-        description: "Opiekuńcza i zawsze gotowa pomóc",
-        species: "Muminek",
+        imie: "Mama Muminka",
+        opis: "Opiekuńcza i spokojna",
+        gatunek: "Muminek",
+        status_snu: false,
     });
 
     const tata = await Character.create({
-        name: "Tata Muminka",
-        description: "Uwielbia przygody i opowieści",
-        species: "Muminek",
+        imie: "Tata Muminka",
+        opis: "Opowiada historie i przygody",
+        gatunek: "Muminek",
+        status_snu: false,
     });
 
     const wloczykij = await Character.create({
-        name: "Włóczykij",
-        description: "Wędrowiec kochający wolność",
-        species: "Inne",
+        imie: "Włóczykij",
+        opis: "Wędrowiec kochający wolność",
+        gatunek: "Inne",
+        status_snu: false,
     });
 
     const malaMi = await Character.create({
-        name: "Mała Mi",
-        description: "Mała, ale bardzo odważna i zadziorna",
-        species: "Miukk",
+        imie: "Mała Mi",
+        opis: "Mała ale bardzo odważna",
+        gatunek: "Miukk",
+        status_snu: false,
     });
 
     const paszczak = await Character.create({
-        name: "Paszczak",
-        description: "Kolekcjoner i archiwista",
-        species: "Paszczak",
+        imie: "Paszczak",
+        opis: "Archiwista i kolekcjoner",
+        gatunek: "Paszczak",
+        status_snu: false,
     });
 
-    const snork = await Character.create({
-        name: "Panna Migotka",
-        description: "Przyjaciółka Muminka",
-        species: "Inne",
+    const migotka = await Character.create({
+        imie: "Migotka",
+        opis: "Przyjaciółka Muminka",
+        gatunek: "Inne",
+        status_snu: false,
     });
 
     await Character.findByIdAndUpdate(muminek._id, {
-        bestFriend: snork._id,
+        przyjaciel_id: migotka._id,
     });
 
-    await Character.findByIdAndUpdate(snork._id, {
-        bestFriend: muminek._id,
+    await Character.findByIdAndUpdate(migotka._id, {
+        przyjaciel_id: muminek._id,
     });
 
     await Character.findByIdAndUpdate(wloczykij._id, {
-        bestFriend: muminek._id,
+        przyjaciel_id: muminek._id,
     });
 
     await Artifact.create([
         {
-            name: "Kapelusz Czarnoksiężnika",
-            description: "Zmienia przedmioty w coś dziwnego",
-            owner: muminek._id,
+            nazwa: "Kapelusz Czarnoksiężnika",
+            opis_wlasciwosci: "Zmienia rzeczy w coś dziwnego",
+            wlasciciel_id: muminek._id,
         },
         {
-            name: "Harmonijka",
-            description: "Magiczny instrument Włóczykija",
-            owner: wloczykij._id,
+            nazwa: "Harmonijka",
+            opis_wlasciwosci: "Magiczny instrument",
+            wlasciciel_id: wloczykij._id,
         },
         {
-            name: "Torebka Mamy Muminka",
-            description: "Zawiera wszystko co potrzebne",
-            owner: mama._id,
+            nazwa: "Torebka Mamy Muminka",
+            opis_wlasciwosci: "Zawiera wszystko co potrzebne",
+            wlasciciel_id: mama._id,
         },
         {
-            name: "Kolekcja znaczków",
-            description: "Najcenniejszy zbiór Paszczaka",
-            owner: paszczak._id,
+            nazwa: "Kolekcja znaczków",
+            opis_wlasciwosci: "Najcenniejszy zbiór Paszczaka",
+            wlasciciel_id: paszczak._id,
         },
         {
-            name: "Muszla",
-            description: "Znaleziona na plaży",
-            owner: muminek._id,
+            nazwa: "Muszla",
+            opis_wlasciwosci: "Znaleziona na plaży",
+            wlasciciel_id: muminek._id,
         },
     ]);
 

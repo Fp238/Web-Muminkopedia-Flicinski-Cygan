@@ -9,6 +9,6 @@ router.get("/:id", CharacterController.getById);
 router.post("/", CharacterController.create);
 router.put("/:id", CharacterController.update);
 router.delete("/:id", CharacterController.delete);
-router.patch("/:id/friend", CharacterController.setBestFriend);
+router.patch("/:id/przyjaciel", CharacterController.setFriend);
 
 export default router;
